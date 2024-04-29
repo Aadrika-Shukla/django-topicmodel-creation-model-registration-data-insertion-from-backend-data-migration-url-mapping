@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        Displaying Access Records model data 
+    
+    <table style="margin: 30px; border: 5px dashed rgb(155, 99, 99);">
+        <tr>
+            <th>id</th>                   <!-- th to display column name  id created by django for representing primary key-->
+            <th>name</th>                 <!-- th to display column name  name-->
+            <th>date</th>                 <!-- th to display column name  date-->
+            <th>author</th>               <!-- th to display column name  author-->
+        </tr>
+        {% for ao in QLAO %}              <!-- we will use for loop here to create table rows as many as objects present in our QLAO-->
+           <tr>
+              <td>{{ ao.id }}</td>        <!-- for ao loop variable display column name id data-->
+              <td>{{ ao.name }}</td>      <!-- for ao loop variable display column name name data-->
+              <td>{{ ao.date }}</td>      <!-- for ao loop variable display column name date data-->
+              <td>{{ ao.author }}</td>    <!-- for ao loop variable display column name author data-->
+           </tr>
+
+        {% endfor %}
+    </table>
+    </center>
+    
+</body>
+</html>

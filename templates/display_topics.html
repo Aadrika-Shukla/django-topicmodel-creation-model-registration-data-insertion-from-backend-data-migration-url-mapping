@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        Displaying Topic model data 
+    <table style="margin: 30px; border: 5px dotted brown;">
+        <tr> 
+            <th>
+                Topic_name <!-- th to display column name-->
+            </th>
+        </tr>
+        {% for to in QLTO %}     <!-- we will use for loop here to create table rows as many as objects present in our QLTO-->
+           <tr>
+              <td>{{ to.topic_name }}</td> <!-- for to loop variable display column name topic_name data-->
+           </tr>
+
+        {% endfor %}
+    </table>
+
+    </center>
+    
+</body>
+</html>

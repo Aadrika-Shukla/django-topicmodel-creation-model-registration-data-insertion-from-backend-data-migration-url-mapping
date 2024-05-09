@@ -110,6 +110,9 @@ def insert_Acess(request):
 
 
 '''''<ORDERING OF THE DATA BY USING ORDER_BY,USAGE OF FUNCTION  EXCLUDE TO FETCH THE DATA ,SLICING TO FETCH ONLY SPECIFIC DATA>'''
+
+
+
 def display_topics(request):
     QLTO=Topic.objects.all()  #to take/get all the data from database where all() will return result in form of queryset of list of all objects
     
@@ -127,9 +130,27 @@ def display_topics(request):
     
     QLTO=Topic.objects.all()  #to take/get all the data from database where all() will return result in form of queryset of list of all objects 
 
+'''''< USING FIELD LOOKUPS (SIMILAR TO WHERE IN SQL) TO APPLY CONDITIKON  ON THE DATA ,WORKING WITH LIKE OPERATOR(__statswith,__endswith,__contains),RELATIONAL OPERATOR LOOKUPS(__gt,__gte,__lt,__lte),DATE LOOKUPS(__day,__year,__month),IN LOOKUP>'''
+
+      
+#FOR PATTERN SEARCHING WE WILL GO FOR STARTSWITH,ENDSWITH,CONTAINS(WHICH IS PART OF LIKE OPERATOR IN OUR ORM)--->ITS NOT CASE SENSITIVE
+
+    
+    QLTO=Topic.objects.filter(topic_name__startswith='c')#like operator startswith field lookup
+
+    QLTO=Topic.objects.filter(topic_name__endswith='l')#like operator endswith field lookup
+    
+    QLTO=Topic.objects.filter(topic_name__contains='a')#like operator contains field lookup
+    
+    """IN FIELD LOOKUP """
+    QLTO=Topic.objects.filter(topic_name__in=('CRICKET','FOOTBALL'))#in operator field lookup you can pass in  operator value in form of tuple also
+
+    QLTO=Topic.objects.filter(topic_name__in=['BADMINTON','FOOTBALL'])#in operator field lookup you can pass in  operator value in form of list also
+    
+    QLTO=Topic.objects.filter(topic_name__in={'CRICKET','RUGBY'})#in operator field lookup you can pass in  operator value in form of set also
 
 
-
+    #for in operator data should as it is provided in the database but for like operator(startswith,endswith,contains) we can provide data in any case that is not case sensitive,in  operator should be written in lowercase else it will not work
    
    
    
@@ -162,6 +183,28 @@ def display_Webpages(request):
     QLWO=WebPage.objects.filter(topic_name='FOOTBALL').order_by('name')#orders football coloumn data based on the name IN ASCENDING ORDER  
     
     QLWO=WebPage.objects.all().exclude(topic_name='FOOTBALL')#shows all the data except football
+    
+    
+    '''''< USING FIELD LOOKUPS (SIMILAR TO WHERE IN SQL) TO APPLY CONDITIKON  ON THE DATA ,WORKING WITH LIKE OPERATOR(__statswith,__endswith,__contains),RELATIONAL OPERATOR LOOKUPS(__gt,__gte,__lt,__lte),DATE LOOKUPS(__day,__year,__month),IN LOOKUP>'''
+    
+    QLWO=WebPage.objects.all() #to take/get all the data from database where all() will return result in form of queryset of list of all objects
+    
+    QLWO=WebPage.objects.filter(name__startswith='m')#like operator startswith field lookup
+    
+    QLWO=WebPage.objects.filter(name__endswith='t')#like operator startswith field lookup
+    
+    QLWO=WebPage.objects.filter(url__contains='a')#like operator contains field lookup
+    
+    QLWO=WebPage.objects.filter(name__in=('msd','VIRAT'))#in operator field lookup you can pass in  operator value in form of tuple also
+
+    
+    QLWO=WebPage.objects.filter(name__in=['MESSI','VIRAT'])#in operator field lookup you can pass in  operator value in form of list also
+    
+    QLWO=WebPage.objects.filter(name__in={'RONALDO','VIRAT'})#in operator field lookup you can pass in  operator value in form of set also
+
+
+    #for in operator data should as it is provided in the database but for like operator(startswith,endswith,contains) we can provide data in any case that is not case sensitive 
+    
     d={'QLWO':QLWO}              #to send data from backend to frontend we use to send that data in form of dictionary which will be passed as an argument to context attribute
     return render(request,'display_Webpages.html',context=d)
     
@@ -187,6 +230,32 @@ def display_AccessRecords(request):
     QLAO=AccessRecord.objects.filter(author='AADRIKA').order_by('id')#displays data where author id AADRIKA based on ascending order of id
 
     QLAO=AccessRecord.objects.exclude(author='AADRIKA')#displays data where author is not aadrika
+
+
+
+    '''''< USING FIELD LOOKUPS (SIMILAR TO WHERE IN SQL) TO APPLY CONDITIKON  ON THE DATA ,WORKING WITH LIKE OPERATOR(__statswith,__endswith,__contains),RELATIONAL OPERATOR LOOKUPS(__gt,__gte,__lt,__lte),DATE LOOKUPS(__day,__year,__month),IN LOOKUP>'''
+    
+    #using date lookups
+    QLAO=AccessRecord.objects.filter(date__month=4) # date lookups to filter month 
+    
+    QLAO=AccessRecord.objects.filter(date__day=29) # date lookups to filter day or date 
+    
+    QLAO=AccessRecord.objects.filter(date__year=2000) # date lookups to filter day or date 
+    
+
+
+    '''for date lookups for month and day the value should be given in numeric data or number value but for
+    year lookup it should be complete year in yyyy format   given data in string is not manadatory 
+    for date lookups'''
+
+    
+    QLAO=AccessRecord.objects.filter(date__year__gt=2000) # date lookups to filter year based on greater than lookup
+    
+    QLAO=AccessRecord.objects.filter(date__year__gte=2000) # date lookups to filter year based on greater than or equal to lookup
+    
+    QLAO=AccessRecord.objects.filter(date__year__lt=2000) # date lookups to filter year based on less than lookup
+    
+    QLAO=AccessRecord.objects.filter(date__year__lte=2000) # date lookups to filter year based on less than or equal to lookup
 
 
 

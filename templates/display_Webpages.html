@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        Displaying Webpages model data    
+    
+    <table border="5px"> 
+        <tr>
+            <th>id</th>                    <!-- th to display column name  id created by django for representing primary key-->
+            <th>topic_name</th>            <!-- th to display column name  topic_name-->
+            <th>name</th>                  <!-- th to display column name  name-->
+            <th>url</th>                   <!-- th to display column name  url-->
+            <th>email</th>                 <!-- th to display column name  email-->
+        </tr>
+        {% for wo in QLWO %}               <!-- we will use for loop here to create table rows as many as objects present in our QLWO-->
+           <tr>
+              <td>{{ wo.id }}</td>          <!-- for wo loop variable display column name id data-->
+              <td>{{ wo.topic_name }}</td>  <!-- for wo loop variable display column name topic_name data-->
+              <!--<td>{{ wo.topic_name.topic_name }}</td>   for wo loop variable display column name topic_name under that display topic_name  data use this format if you are not using def__str__ method to represent some data in form of string to display in table -->
+              <td>{{ wo.name }}</td>        <!-- for wo loop variable display column name name data-->
+              <td>{{ wo.url }}</td>         <!-- for wo loop variable display column name url data-->
+              <td>{{ wo.email }}</td>       <!-- for wo loop variable display column name email data-->
+           </tr>
+
+        {% endfor %}
+    </table>
+    </center>
+    
+</body>
+</html>

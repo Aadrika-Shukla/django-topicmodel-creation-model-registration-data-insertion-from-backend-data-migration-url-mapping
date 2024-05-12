@@ -191,4 +191,51 @@ raw sql  -> means normal sql query
 
 
 
+''''FOR DOING SUBQUERIES RELATED TASK WE WILL USE VALUES() TO FETCH ONLY SPECIFIC OBJECTS WHERE TABLE IS NOT CONNECTED DIRECTLY IN DJANGO WE WILL MOVE TO CONCEPT OF ANNOTATIONS INSTEAD OF USING ANNOTATIONS WE WILL MOVE FOR
+WARD WITH THE CONCEPT OF VALUES()-WHICH WILL RETURN ONLY THAT QUERY OBJECT THAT IS PASSED AS AN ARGUMENT TO VALUE'''
+
+
+def subqueries(request):
+    
+    #emp dept salgrade join data #no foreign keys so can't display salgrades losal and hisal coloumns  in  frontend so use shell in order to verify the results 
+
+    EMSJD=Emp.objects.select_related('deptno','mgr').all()#we are using select_related because that mgr and dept no are foreign key
+
+    EMSJD=Emp.objects.values('ename','sal').filter(sal__gt=Salgrade.objects.values('losal').filter(grade=1),sal__lt=Salgrade.objects.values('hisal').filter(grade=1))
+    
+    #output ->   <QuerySet [{'ename': 'SMITH', 'sal': Decimal('800.00')}, {'ename': 'ADAMS', 'sal': Decimal('1100.00')}, {'ename': 'JAMES', 'sal': Decimal('950.00')}]>
+
+    EMSJD=Emp.objects.values('ename','sal').filter(sal__gt=Salgrade.objects.values('losal').filter(grade=2),sal__lt=Salgrade.objects.values('hisal').filter(grade=2))
+
+    #output ->     <QuerySet [{'ename': 'WARD', 'sal': Decimal('1250.00')}, {'ename': 'MARTIN', 'sal': Decimal('1250.00')}, {'ename': 'MILLER', 'sal': Decimal('1300.00')}]>
+
+    EMSJD=Emp.objects.values('ename','sal').filter(sal__gt=Salgrade.objects.values('losal').filter(grade=3),sal__lt=Salgrade.objects.values('hisal').filter(grade=3))
+    
+    #output  ->     <QuerySet [{'ename': 'ALLEN', 'sal': Decimal('1600.00')}, {'ename': 'TURNER', 'sal': Decimal('1500.00')}]>
+
+
+    EMSJD=Emp.objects.values('ename','sal').filter(sal__gt=Salgrade.objects.values('losal').filter(grade=4),sal__lt=Salgrade.objects.values('hisal').filter(grade=4))
+
+    #output    ->    <QuerySet [{'ename': 'JONES', 'sal': Decimal('2975.00')}, {'ename': 'BLAKE', 'sal': Decimal('2850.00')}, {'ename': 'CLARK', 'sal': Decimal('2450.00')}]>
+
+
+    EMSJD=Emp.objects.values('ename','sal').filter(sal__gt=Salgrade.objects.values('losal').filter(grade=5),sal__lt=Salgrade.objects.values('hisal').filter(grade=5))
+
+    #output     ->    <QuerySet [{'ename': 'KING', 'sal': Decimal('5000.00')}]>
+
+    EMSJD=Emp.objects.select_related('deptno','mgr').all()
+
+    d={'EMSJD':EMSJD}
+
+    return render(request,'subqueries.html',d)
+
+
+
+
+
+
+
+
+
+
 

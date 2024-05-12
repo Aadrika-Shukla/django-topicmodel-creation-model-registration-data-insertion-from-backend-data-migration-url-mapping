@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Joining more than 2 tables in ORM(Emp,Dept,Mgr(manager)table,salgrade) in order to perform subqueries</h1>
+        <h3>AS EMPLOYEE TABLE AND SALGRADE TABLE DON'T HAVE ANY CONNECTION WE CAN'T DISPLAY THE DATA IN FRONTEND SO YOU NEED TO RUN THE QUERIES IN SHELL</h3>
+        <table border="2px">
+            <tr>
+                <th>empno</th>
+                <th>ename</th>
+                <th>job</th>
+                <th>mgr</th>
+                <th>hiredate</th>
+                <th>employee sal</th>
+                <th>comm</th>
+                <th>employee deptno</th>
+                <th>employee dname</th>
+                <th>employee location</th>
+                <th>reporting manager's salary</th>
+                <th>reporting manager's name</th>
+                <th>reporting manager's employee id</th>
+                <th>reporting manager's employee deptno</th>
+                <th>reporting manager's employee dname</th>
+                <th>reporting manager's employee location</th>
+                <th>grade</th>
+                <th>losal</th>
+                <th>hisal</th>
+            </tr>
+            {% for EMDSO in EMSJD %}
+               <tr>
+                <td>{{EMDSO.empno}}</td>       <!-- as it is child table data so we  directly give objectname.columnname to display the data from   our table-->
+                <td>{{EMDSO.ename}}</td>
+                <td>{{EMDSO.job}}</td>
+                <td>{{EMDSO.mgr}}</td>
+                <td>{{EMDSO.hiredate}}</td>
+                <td>{{EMDSO.sal}}</td>
+                <td>{{EMDSO.comm}}</td>
+                <td>{{EMDSO.deptno}}</td>
+                <td>{{EMDSO.deptno.dname}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.deptno.loc}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.sal}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.ename}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.empno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.deptno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.deptno.dname}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.mgr.deptno.loc}}</td> <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDSO.grade}}</td>       <!--as the salgrade table and emp table have no connection so this coloumn will not get displayed-->
+                <td>{{EMDSO.losal}}</td>       <!--as the salgrade table and emp table have no connection so this coloumn will not get displayed-->
+                <td>{{EMDSO.hisal}}</td>       <!--as the salgrade table and emp table have no connection so this coloumn will not get displayed-->
+               </tr>
+            {% endfor %}
+        </table>
+    </center>
+</body>
+</html>

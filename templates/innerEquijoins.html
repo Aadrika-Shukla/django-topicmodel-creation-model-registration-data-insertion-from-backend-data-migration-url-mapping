@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Joins In ORM-INNER EQUI JOINS</h1>
+        <table border="3px">
+            <tr>
+                <th>empno</th>
+                <th>ename</th>
+                <th>job</th>
+                <th>mgr</th>
+                <th>hiredate</th>
+                <th>sal</th>
+                <th>comm</th>
+                <th>deptno</th>
+                <th>dname</th>
+                <th>loc</th>
+            </tr>
+            {% for EDO in JDED %}
+               <tr>
+                <td>{{EDO.empno}}</td>       <!-- as it is child table data so we  directly give objectname.columnname to display the data from   our table-->
+                <td>{{EDO.ename}}</td>
+                <td>{{EDO.job}}</td>
+                <td>{{EDO.mgr}}</td>
+                <td>{{EDO.hiredate}}</td>
+                <td>{{EDO.sal}}</td>
+                <td>{{EDO.comm}}</td>
+                <td>{{EDO.deptno}}</td>
+                <td>{{EDO.deptno.dname}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EDO.deptno.loc}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+              </tr>
+            {% endfor %}
+        </table>
+       
+    </center>
+</body>
+</html>

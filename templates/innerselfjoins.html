@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Joins In ORM-INNER SELF JOINS</h1>
+        <table border="3px">
+            <tr>
+                <th>empno</th>
+                <th>ename</th>
+                <th>job</th>
+                <th>mgr</th>
+                <th>hiredate</th>
+                <th>sal</th>
+                <th>comm</th>
+                <th>employee deptno</th>
+                <th>reporting manager's salary</th>
+                <th>reporting manager's name</th>
+                <th>reporting manager's employee id</th>
+                <th>reporting manager's employee deptno</th>
+            </tr>
+            {% for EMO in JDEM %}
+            <tr>
+                <td>{{EMO.empno}}</td>       <!-- as it is child table data so we  directly give objectname.columnname to display the data from   our table-->
+                <td>{{EMO.ename}}</td>
+                <td>{{EMO.job}}</td>
+                <td>{{EMO.mgr}}</td>
+                <td>{{EMO.hiredate}}</td>
+                <td>{{EMO.sal}}</td>
+                <td>{{EMO.comm}}</td>
+                <td>{{EMO.deptno}}</td>
+                <td>{{EMO.mgr.sal}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMO.mgr.ename}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMO.mgr.empno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMO.mgr.deptno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                
+            </tr>
+            {% endfor %}
+        </table>
+    </center>
+</body>
+</html>

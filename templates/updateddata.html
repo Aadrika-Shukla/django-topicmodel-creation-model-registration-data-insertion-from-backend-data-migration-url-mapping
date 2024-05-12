@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>Updating  tables in ORM(Emp,Dept,Mgr(manager))table using update() and update_or_create()</h1>
+        <table border="2px">
+            <tr>
+                <th>empno</th>
+                <th>ename</th>
+                <th>job</th>
+                <th>mgr</th>
+                <th>hiredate</th>
+                <th>employee sal</th>
+                <th>comm</th>
+                <th>employee deptno</th>
+                <th>employee dname</th>
+                <th>employee location</th>
+                <th>reporting manager's salary</th>
+                <th>reporting manager's name</th>
+                <th>reporting manager's employee id</th>
+                <th>reporting manager's employee deptno</th>
+                <th>reporting manager's employee dname</th>
+                <th>reporting manager's employee location</th>
+            </tr>
+            {% for EMDO in UDE %}
+               <tr>
+                <td>{{EMDO.empno}}</td>       <!-- as it is child table data so we  directly give objectname.columnname to display the data from   our table-->
+                <td>{{EMDO.ename}}</td>
+                <td>{{EMDO.job}}</td>
+                <td>{{EMDO.mgr}}</td>
+                <td>{{EMDO.hiredate}}</td>
+                <td>{{EMDO.sal}}</td>
+                <td>{{EMDO.comm}}</td>
+                <td>{{EMDO.deptno}}</td>
+                <td>{{EMDO.deptno.dname}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.deptno.loc}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.sal}}</td>   <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.ename}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.empno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.deptno}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.deptno.dname}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+                <td>{{EMDO.mgr.deptno.loc}}</td>     <!--as it is parent table data that will be present under parent table common coloumn name so here objectname.commoncoloumnname.columnname-->
+               </tr>
+            {% endfor %}
+        </table>
+    </center>
+</body>
+</html>

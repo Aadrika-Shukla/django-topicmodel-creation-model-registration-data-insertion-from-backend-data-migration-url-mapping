@@ -28,6 +28,10 @@ performing and operation ;
 
 
 
+
+
+
+
 def logicaloperators(request):
 
 
@@ -135,6 +139,9 @@ def innerselfjoins(request):
 ''''JOINING MORE THAN 2 TABLES  IN OUR ORM IN SQL WE NEED TO MENTION TABLE NAME FOR JOINING THE TABLES BUT IN OUR ORM WE JUST
 NEED TO MENTION OUR COMMON  COLUMN NAMES AND MY ORM WILL SEARCH FOR THAT FOREIGN KEY COLUMN AND JOINED THAT TABLE BY ITSELF'''
 
+#####use of extra() to wrie raw sql queries in case of complex operations#####
+
+
 
 
 
@@ -152,6 +159,23 @@ def multitablejoins(request):
     #JDEMD=Emp.objects.select_related('deptno','mgr').filter(sal__gt=2000,deptno__dname='RESEARCH',mgr__deptno='RESEARCH')# FOR SEARCHING DATA OF JOINED TABLE YOU SHOULD GIVE:COMMONCOLOUMN NAME__COLUMNNAME='VALUE'
 
    
+    ''''#######--------TO EXECUTE TASK LIKE ONLY SPECIFIC CHARACTERS MATCHING WE HAVE TO USE CONCEPT OF ANNOTATIONS
+,SO INSTEAD OF DOING THAT WE CAN USE THE CONCEPT OF RAW SQL QUERIES FOR WRITING RAW SQL QUERIES WE NEED TO USE EXTRA()
+WHICH WILL TAKE 1 ARGUMENT WHERE=[''] ,IN WHERE WE NEED TO WRITE THE CONDITION  IN FORM OF STRINGS,
+THEIR SHOULD BE SPACE BETWEEN = AND QUERY ELSE IT WILL NOT EXECUTE AND SHOW YOU THE RESULT
+raw sql  -> means normal sql query
+'''
+     
+    ########---------USING EXTRA () TO WRITE RAW SQL QUESRIES--------#########
+
+
+    JDEMD=Emp.objects.extra(where=['LENGTH(ename) = 5'])  #it will fetch details of employee having name containing only 5 characters
+
+    JDEMD=Emp.objects.extra(where=['LENGTH(ename) IN (SELECT dname FROM Dept where LENGTH(dname) = 5)'])
+
+    JDEMD=Emp.objects.extra(where=["ename LIKE  '%E_' "]) # FETCHES DETAILS HAVING LAST 2ND CHARATER IS E IN NAME
+
+    JDEMD=Emp.objects.extra(where=['LENGTH(ename) = 5 AND LENGTH(job) = 5']) 
 
 
 

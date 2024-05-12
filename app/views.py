@@ -237,5 +237,87 @@ def subqueries(request):
 
 
 
+'''updating the table data using update() and update_or_create() for updating the data first write 
+updating condition then render the html page and display details in frontend
+for update() you can use filter() as well as all() but for update_or_create() you no neeed to use any method for filtering the records
+for both the methods we don't need to give variable to store the objects
+in sql udpate and insert were dml commands hence temporary chnages but here in orm update is permanent command
+in update_or_create() column you want to update must be given as dictionary to defaults where key will be column name
+and value will be update value and conditions returned before defaults are filtering conditions beacuse we are
+not using here filter() '''
+
+
+
+
+
+
+
+
+
+
+
+def update_table(request):
+
+
+    #---------USING UPDATE() TO UPDATE OUR DATA
+
+    UDE=Emp.objects.all()
+
+
+    #Emp.objects.all().update(columnname=value)   #used to update all the rows of data with new values
+
+
+    Emp.objects.filter(comm=None).update(comm=0)# multi rows satisfies updates it
+
+    Emp.objects.filter(ename='KING').update(comm=1000000)# SINGLE row satisfies updates it
+
+    Emp.objects.filter(ename='AADRIKA').update(sal=1000000)# no row so no  updation done here
+
+    ####---Emp.objects.filter(ename='KING').update(deptno=1000000)# for foriegn key column data you are trying to update must me present in our parent table(from which foriegn key connections is done) so it will throw INTEGRITY ERROR
+
+    Emp.objects.filter(ename='KING').update(deptno=40)  # as this deptno 40 was present in our parent table so it get updated here
+
+    Emp.objects.filter(ename='KING').update(deptno=40,sal=10000) #you can update as many column you want to update as well as you can pass multiple column name for filter() here.
+
+
+
+    #---------           USING UPDATE_OR_CREATE()   --------#
+
+
+
+
+
+    #Emp.objects.update_or_create(comm=0,defaults={'comm':None}) # satisfying multiple rows so it will throw error as MultipleObjectsReturned as update_or_create can only work with single row data 
+
+    Emp.objects.update_or_create(ename='KING',defaults={'comm':10000})# SINGLE row satisfies updates it
+
+    Emp.objects.update_or_create(ename='KING',defaults={'sal':500000})
+
+    #Emp.objects.update_or_create(ename='AADRIKA',defaults={'sal':1000000})# AS NO DATA EName =aadrika is present so update_or_create() will create a new row for that you need to give data/value for every column
+     
+
+    '''1)as we need to create a new object/row to the table which is not present in our table 
+    we need to get the object of our parent table in order to update it 
+    2)WE NEED TO PROVIDE EVERY COLUMN DATA/VALUE  WE ARE GOING TO CREATE(NEW RECORD/ROW/OBJECT)'''
+
+    DO=Dept.objects.get(deptno=40,dname='OPERATIONS',loc='BOSTON')
+    MO=Emp.objects.get(empno=7839)#AS I NEED TO GET THE DETAILS OF KING AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AADRIKA',defaults={'empno':5555,'job':'DATA ANALYST','hiredate':'2001-04-19','comm':0,'sal':1000000,'deptno':DO,'mgr':MO})
+
+    
+        
+    d={'UDE':UDE}
+    return render(request,'updateddata.html',d)
+
+
+
+
+
+
+
+
+
+
 
 

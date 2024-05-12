@@ -314,10 +314,76 @@ def update_table(request):
 
 
 
+''''1))for deleting the data in orm we have delete() if we want to delete specific rows then we use filter()with delete() ,else 
+if we want to delete all the data of a table then we use delete with all()
+2))if we delete parent table data it will delete all the data in child table as we have foreign key connection between 2 tables
+3)))in  case of self join if we delete the data (foreign key column) in copy of one table it will set according to conditio we have
+given while creating views here we have given set null to that fields if parent table column id deleted so it will set null to their child table 
+column ,hence it will not delete child column data is parent column data is deleted
+4))delete is permanent command in our orm ,we don't need to use variable to store our operations we performed as they are returning a object'''
 
 
 
+def deleteddata(request):
+
+    UDE=Emp.objects.all()
+
+    #first we will create some dummy objects in order to perform deletion operation  on them so that it will not effect our original table data
+
+    DO=Dept.objects.get(deptno=40,dname='OPERATIONS',loc='BOSTON')
+    MO=Emp.objects.get(empno=7839)#AS I NEED TO GET THE DETAILS OF KING AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AADRIKA',defaults={'empno':5555,'job':'DATA ANALYST','hiredate':'2001-04-19','comm':0,'sal':1000000,'deptno':DO,'mgr':MO})
+
+    
+    
+    DO=Dept.objects.get(deptno=50,dname='HR',loc='LONDON')
+    MO=Emp.objects.get(empno=5555)#AS I NEED TO GET THE DETAILS OF AADRIKA AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AANSHI',defaults={'empno':6666,'job':'RESEARCH ANALYST','hiredate':'2001-03-13','comm':0,'sal':15000786,'deptno':DO,'mgr':MO})
 
 
+    DO=Dept.objects.get(deptno=10,dname='ACCOUNTING',loc='NEW YORK')
+    MO=Emp.objects.get(empno=5555)#AS I NEED TO GET THE DETAILS OF AADRIKA AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AANSHI ABC',defaults={'empno':7777,'job':'HEAD CASHIER','hiredate':'2001-10-09','comm':0,'sal':15000786,'deptno':DO,'mgr':MO})
 
 
+    DO=Dept.objects.get(deptno=30,dname='SALES',loc='CHICAGO')
+    MO=Emp.objects.get(empno=5555)#AS I NEED TO GET THE DETAILS OF AADRIKA AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AANSHI XYZ',defaults={'empno':8888,'job':'SALES CHIEF EXECUTIVE','hiredate':'2008-10-21','comm':0,'sal':9000000,'deptno':DO,'mgr':MO})
+
+    DO=Dept.objects.get(deptno=30,dname='SALES',loc='CHICAGO')
+    MO=Emp.objects.get(empno=5555)#AS I NEED TO GET THE DETAILS OF AADRIKA AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    
+    Emp.objects.update_or_create(ename='AANSHI KLM',defaults={'empno':9999,'job':'SALES CHIEF EXECUTIVE','hiredate':'2008-10-21','comm':0,'sal':9000000,'deptno':DO,'mgr':MO})
+
+    
+    
+    
+    
+    
+    #Emp.objects.all().delete()#in order to delete all the data from the table
+
+    
+    Emp.objects.filter(sal__gt=1500000,deptno=10).delete() #deletes the empno :7777 from the table --->deletes single record
+
+    Emp.objects.filter(hiredate__year__gt=2002).delete() #deletes the empno :8888 and 9999 from the table---->deletes multiple record
+
+    Emp.objects.filter(hiredate__year__gt=2002).delete()# didn't perform any action if data is not present in our table
+
+    Emp.objects.filter(empno=5555).delete()#it will delete empno 5555 record but as emp 5555 was manager for some other people it will not delete their employee data and set their mgr field as none beacuse on on_delete=set_null we have given condition while creating of our models
+    
+
+    DO=Dept.objects.get(deptno=50,dname='HR',loc='LONDON')
+    MO=Emp.objects.get(empno=7839)#AS I NEED TO GET THE DETAILS OF KING AS EMPLOYEE WILL WORK UNDER EVERY REPORTING MANAGER
+    Emp.objects.update_or_create(ename='AANSHI PQR',defaults={'empno':4444,'job':'HUMAN RESOURCE EXECUTIVE','hiredate':'2008-05-21','comm':4000000,'sal':90000000,'deptno':DO,'mgr':MO})
+    
+
+    Emp.objects.filter(deptno=50).delete()#it will delete all the data of employee having deptno as 50 as dept is our parent table here
+
+    UDE=Emp.objects.all()
+
+    d={'UDE':UDE}
+    return render(request,'deleteddata.html',d)

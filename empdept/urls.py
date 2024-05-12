@@ -26,4 +26,5 @@ urlpatterns = [
     path('subqueries/',subqueries,name='subqueries'),
     path('update_table/',update_table,name='update_table'),
     path('logicaloperators/',logicaloperators,name='logicaloperators'),
+    path('deleteddata/',deleteddata,name='deleteddata'),
 ]
